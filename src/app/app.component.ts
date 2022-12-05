@@ -8,7 +8,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 export class AppComponent implements AfterViewInit {
   date: any;
   now: any;
-  targetDate: any = new Date(2022, 12, 1);
+  targetDate: any = new Date(2022, 11, 19, 20, 25);
   targetTime: any = this.targetDate.getTime();
   difference: number;
   months: Array<string> = [
@@ -50,8 +50,16 @@ export class AppComponent implements AfterViewInit {
     this.date = new Date();
     this.now = this.date.getTime();
     this.days.nativeElement.innerText = Math.floor(this.difference);
-    this.hours.nativeElement.innerText = 23 - this.date.getHours();
-    this.minutes.nativeElement.innerText = 60 - this.date.getMinutes();
+    if (this.targetDate.getHours() - this.date.getHours() < 0) {
+      this.hours.nativeElement.innerText = this.targetDate.getHours() - this.date.getHours() + 23;  
+    } else {
+      this.hours.nativeElement.innerText = this.targetDate.getHours() - this.date.getHours();  
+    }
+    if (this.targetDate.getMinutes() - this.date.getMinutes() < 0) {
+      this.minutes.nativeElement.innerText = this.targetDate.getMinutes() - this.date.getMinutes() + 59;  
+    } else {
+      this.minutes.nativeElement.innerText = this.targetDate.getMinutes() - this.date.getMinutes() - 1;  
+    }
     this.seconds.nativeElement.innerText = 60 - this.date.getSeconds();
   }
 }
